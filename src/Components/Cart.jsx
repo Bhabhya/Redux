@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { remove } from "../Redux/Cartslice";
 
 const Cart = () => {
-  // Fetch the cart state from Redux
+  
   const cartItems = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
