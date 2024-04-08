@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import axios from 'axios';
 import { useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const Product = () => {
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const dispatch = useDispatch();
 
     const handleAdd = (item) => {
@@ -18,19 +18,28 @@ const Product = () => {
         axios.get('https://fakestoreapi.com/products')
             .then((response) => {
                 setData(response.data);
+                setFilteredData(response.data); // Initialize filteredData with all data
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
             });
     }, []);
 
+    const handleSearchInputChange = (event) => {
+        const query = event.target.value.toLowerCase();
+        const filtered = data.filter(item =>
+            item.title.toLowerCase().includes(query)
+        );
+        setFilteredData(filtered);
+    };
+
     return (
         <Section className="container-fluid">
+            <input placeholder="search here" onChange={handleSearchInputChange}></input>
             <div className="row">
-                {data.map((item, index) => (
+                {filteredData.map((item, index) => (
                     <div key={index} className="col-md-4">
                         <div className="info">
-                            
                             <Link to={`/products/${item.id}`}>
                                 <div className="image">
                                     <img src={item.image} alt={item.title} />

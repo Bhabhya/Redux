@@ -19,6 +19,7 @@ const Header = () => {
 
    </ul>
 
+   
   
    <h3>Quantity:{items.length}</h3>
    

@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { remove } from "../Redux/Cartslice";
 
 const Cart = () => {
-  
   const cartItems = useSelector((state) => state.cart);
-
   const dispatch = useDispatch();
 
   const handleRemove = (id) => {
     dispatch(remove(id));
   };
+
+  // Calculate total price
+  const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
   return (
     <Section className="container-fluid">
@@ -30,12 +31,15 @@ const Cart = () => {
                     <button onClick={() => handleRemove(item.id)}>
                       Remove
                     </button>
+                    
                   </div>
+                 
                 </CartItem>
               ))
             ) : (
               <p>CART IS EMPTY!!</p>
             )}
+            <p>Total Price: ${totalPrice.toFixed(2)}</p>
           </div>
         </div>
       </div>
